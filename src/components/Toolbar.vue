@@ -56,7 +56,7 @@
             const data = {
                 items: this.$store.getters.items
             }
-            this.$http.put('data.json', data);
+            this.$http.patch('data.json', data);
             this.snackbar = true;
         },
         deleteData () {

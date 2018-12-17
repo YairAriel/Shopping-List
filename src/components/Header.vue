@@ -28,6 +28,17 @@
             </v-card-title>
         </v-card>
 
+        <v-snackbar
+            v-model="snackbar"
+            :color="color"
+            :top="y === 'top'"
+            :multi-line="mode === 'multi-line'"
+            :timeout="timeout"
+            :vertical="mode === 'vertical'">
+            {{ text }}
+            <v-btn dark flat @click="snackbar = false">Close</v-btn>
+        </v-snackbar>
+
         <v-dialog v-model="settingsDialog" fullscreen hide-overlay transition="slide-x-reverse-transition">
             <v-card>
                 <v-toolbar dark color="primary">
@@ -37,10 +48,9 @@
                 <v-toolbar-title>Settings</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
-                    <v-btn dark flat @click="saveList">Save</v-btn>
+                    <v-btn dark flat @click="saveSettings">Save</v-btn>
                 </v-toolbar-items>
                 </v-toolbar>
-                <v-subheader>User Controls</v-subheader>
                 <v-card avatar>
                     <v-card-title class="pb-0">Default Color</v-card-title>
                     <v-subheader>Set the default color for the items in your list</v-subheader>
@@ -61,12 +71,16 @@
 </template>
 
 <script>
-    import { Carousel, Slide } from 'vue-carousel';
-
     export default {
         data () {
             return {
                 headerText: 'shopping list',
+                snackbar: false,
+                color: 'black',
+                y: 'top',
+                mode: '',
+                timeout: 6000,
+                text: 'List was saved successfully',
                 menuItems: [
                     { title: 'Settings', method: this.openSettings },
                     { title: 'Save List', method: this.saveList },
@@ -104,21 +118,23 @@
             changeColor (newDefaultColor) {
                 this.$store.commit('setDefaultColor', newDefaultColor);
             },
-            saveList () {
+            saveSettings () {
                 const defaultColor = {
                     color: this.$store.getters.defaultColor
                 };
-                console.log(defaultColor);
-                this.$http.put('data.json', defaultColor);
+                this.$http.patch('defaultColor.json', defaultColor);
                 this.settingsDialog = false;
+            },
+            saveList () {
+                const data = {
+                    items: this.$store.getters.items
+                }
+                this.$http.patch('data.json', data);
+                this.snackbar = true;
             },
             deleteList () {
 
             }
-        },
-        components: {
-            Carousel,
-            Slide
         },
         created () {
             console.log(this.defaultColor)
