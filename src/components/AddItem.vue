@@ -14,7 +14,7 @@
                     color="success"
                     class="subheading"
                     @click="addToList"
-                    :disabled="item == '' || amount == 0">{{ addText | toUpper }}</v-btn>
+                    :disabled="item == '' || amount == ''">{{ addText | toUpper }}</v-btn>
             </v-flex>
         </v-layout>
      </v-container>
@@ -25,8 +25,8 @@
     export default {
         data () {
             return {
-                item: "",
-                amount: 0,
+                item: '',
+                amount: '',
                 addText: 'add item'
             }
         },
@@ -54,7 +54,6 @@
             .then(response => response.json())
             .then(data => {
                 if(data) {
-                    console.log(data.color);
                     this.$store.commit('setDefaultColor', data.color);
                 }
             });

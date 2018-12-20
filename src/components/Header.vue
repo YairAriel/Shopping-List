@@ -83,8 +83,7 @@
                 text: 'List was saved successfully',
                 menuItems: [
                     { title: 'Settings', method: this.openSettings },
-                    { title: 'Save List', method: this.saveList },
-                    { title: 'Delete List', method: this.deleteList }
+                    { title: 'Save List', method: this.saveList }
                 ],
                 settingsDialog: false,
                 colors: [
@@ -135,9 +134,6 @@
             deleteList () {
 
             }
-        },
-        created () {
-            console.log(this.defaultColor)
         }
     }
 </script>
