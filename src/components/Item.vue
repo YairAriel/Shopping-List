@@ -38,11 +38,10 @@
                         </v-text-field>
                     </v-card-text>
                     <v-card-text class="pa-0 my-2">
-                        <v-layout row>
-                            <v-flex xs4 v-for="(color, index) in colors" :key="index">
-                                <v-btn fab @click="item.color = color">
-                                    <v-icon large :color="color">format_paint</v-icon>
-                                </v-btn>
+                        <v-layout row wrap>
+                            <v-flex xs2 v-for="(color, index) in colors" :key="index">
+                                <v-icon medium :color="color" :class="{ selected: item.color == color }"
+                                    @click="item.color = color">brightness_1</v-icon>
                             </v-flex>
                         </v-layout>
                     </v-card-text>
@@ -62,10 +61,12 @@
                 dialog: false,
                 clicked: false,
                 colors: [
-                    'deep-orange',
+                   'lime',
                     'amber',
-                    'green',
-                    'blue'
+                    'deep-orange',
+                    'pink',
+                    'deep-purple',
+                    'indigo'
                 ],
                 pickedColor: ''
             }
@@ -84,3 +85,11 @@
         },
     }
 </script>
+
+<style lang="scss" scoped>
+    .selected {
+        border: 2px solid #1976D2;
+        border-radius: 23px;
+    }
+</style>
+

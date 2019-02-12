@@ -6,8 +6,8 @@
                     <div class="headline">
                         {{ headerText | toUpper }}
                         <v-badge right overlap color="red">
-                            <span slot="badge">{{ itemAmount }}</span>
-                            <v-icon medium dark class="ml-3">shopping_cart</v-icon>
+                            <span slot="badge" class="header-badge">{{ itemAmount }}</span>
+                            <v-icon large dark class="ml-3">shopping_cart</v-icon>
                         </v-badge>
                     </div>
                 </div>
@@ -87,18 +87,12 @@
                 ],
                 settingsDialog: false,
                 colors: [
+                    'lime',
                     'amber',
+                    'deep-orange',
                     'pink',
                     'deep-purple',
-                    'brown',
-                    'blue',
-                    'deep-orange',
-                    'green',
-                    'yellow',
-                    'red',
-                    'orange',
-                    'lime',
-                    'indigo',
+                    'indigo'
                 ]
             }
         },
@@ -142,6 +136,9 @@
     .selected {
         border: 2px solid #1976D2;
         border-radius: 23px;
+    }
+    .header-badge {
+        line-height: 0 !important;
     }
 </style>
 
