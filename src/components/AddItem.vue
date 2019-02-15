@@ -34,7 +34,7 @@
             addToList () {
                 this.$store.commit('itemAdded', { name: this.item, qty: this.amount, color: this.defaultColor });   
                 this.item = "";
-                this.amount = 0;
+                this.amount = "";
             }
         }, 
         computed: {

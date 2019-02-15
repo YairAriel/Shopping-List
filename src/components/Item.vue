@@ -40,13 +40,14 @@
                     <v-card-text class="pa-0 my-2">
                         <v-layout row wrap>
                             <v-flex xs2 v-for="(color, index) in colors" :key="index">
-                                <v-icon medium :color="color" :class="{ selected: item.color == color }"
-                                    @click="item.color = color">brightness_1</v-icon>
+                                <v-icon medium :color="color" @click="item.color = color"
+                                    :class="{ selected: item.color == color }">brightness_1</v-icon>
                             </v-flex>
                         </v-layout>
                     </v-card-text>
 
-                    <v-btn @click="saveChanges" :disabled="item.name == '' || item.qty == 0">Edit</v-btn>
+                    <v-btn @click="closeEditDialog">Cancel</v-btn>
+                    <v-btn @click="saveChanges" :disabled="item.name == '' || item.qty == 0">Save</v-btn>
                 </v-card>
             </v-dialog>
         </v-layout>
@@ -68,21 +69,35 @@
                     'deep-purple',
                     'indigo'
                 ],
-                pickedColor: ''
+                pickedColor: '',
+                tempItem: {}
             }
         },
         methods: {
             deleteItem () {
-                this.$store.commit('removeFromList', this.itemIndex)
+                this.$store.commit('removeFromList', this.itemIndex);
             },
             openEditDialog () {
+                this.tempItem.name = this.item.name;
+                this.tempItem.qty = this.item.qty;
+                this.tempItem.color = this.item.color;
                 this.dialog = true;
             },
+            closeEditDialog () {
+                this.item.name = this.tempItem.name;
+                this.item.qty = this.tempItem.qty;
+                this.item.color = this.tempItem.color;
+                this.dialog = false;
+            },
             saveChanges () {
-                this.$store.commit('editItem', { index: this.itemIndex, item: this.item, color: this.pickedColor });
+                this.$store.commit('editItem', { index: this.itemIndex, item: this.item });
+                const data = {
+                    items: this.$store.getters.items
+                }
+                this.$http.patch('data.json', data);
                 this.dialog = false;
             }
-        },
+        }
     }
 </script>
 
