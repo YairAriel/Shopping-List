@@ -2,11 +2,19 @@
     <div>
         <v-list-tile>
             <v-list-tile-content>
-                <v-chip :color="item.color" text-color="white" class="body-2" v-if="!clicked" @click="clicked = true">
-                    <v-avatar :class="item.color" class="darken-3 body-2">{{ item.qty }}</v-avatar>{{ item.name }}
+                <v-chip v-if="!clicked" :color="item.color" text-color="white" class="body-2" 
+                    @click="getChecked">
+                    <v-avatar :class="item.color" class="darken-3 body-2">
+                        {{ item.qty }}
+                    </v-avatar>
+                    {{ item.name }}
                 </v-chip>
-                <v-chip color="grey" text-color="white" class="body-2" v-else @click="clicked = false">
-                    <v-avatar class="grey darken-3 body-2"><v-icon>done</v-icon></v-avatar>{{ item.name }}
+                <v-chip v-else color="grey" text-color="white" class="body-2"
+                    @click="getUnchecked">
+                    <v-avatar class="grey darken-3 body-2">
+                        <v-icon>done</v-icon>
+                    </v-avatar>
+                    {{ item.name }}
                 </v-chip>
             </v-list-tile-content>
 
@@ -74,6 +82,14 @@
             }
         },
         methods: {
+            getChecked () {
+                this.clicked = true;
+                this.$emit('checked');
+            },
+            getUnchecked () {
+                this.clicked = false;
+                this.$emit('unchecked');
+            },
             deleteItem () {
                 this.$store.commit('removeFromList', this.itemIndex);
             },

@@ -3,10 +3,12 @@
     <v-container>
         <v-layout v-bind="binding">
             <v-flex xs12 md4>
-                <v-text-field label="Enter a New Item" placeholder="Item Name" v-model="item"></v-text-field>
+                <v-text-field label="Enter a New Item" placeholder="Item Name" v-model="item"
+                    @click="inputClicked" @blur="inputBlured"></v-text-field>
             </v-flex>
             <v-flex xs12 md4 offset-md1>
-                <v-text-field label="Quantity" placeholder="0" type="number" v-model="amount"></v-text-field>
+                <v-text-field label="Quantity" placeholder="0" type="number" v-model="amount"
+                    @click="inputClicked" @blur="inputBlured"></v-text-field>
             </v-flex>
             <v-flex xs12 md2 offset-md1>
                 <v-btn 
@@ -35,6 +37,12 @@
                 this.$store.commit('itemAdded', { name: this.item, qty: this.amount, color: this.defaultColor });   
                 this.item = "";
                 this.amount = "";
+            },
+            inputClicked () {
+                this.$emit('hide');
+            },
+            inputBlured () {
+                this.$emit('show');
             }
         }, 
         computed: {

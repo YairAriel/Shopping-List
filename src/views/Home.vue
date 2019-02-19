@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <Header />
-    <AddItem />
+    <AddItem @hide="hideToolbar" @show="showToolbar"/>
     <List />
-    <Toolbar />
+    <Toolbar :isVisible="toolbarViewer"/>
   </div>
 </template>
 
@@ -15,6 +15,19 @@ import Header from "@/components/Header.vue";
 import Toolbar from "@/components/Toolbar.vue";
 
 export default {
+  data () {
+    return {
+      toolbarViewer: true
+    }
+  },
+  methods: {
+    hideToolbar () {
+      this.toolbarViewer = false;
+    },
+    showToolbar () {
+      this.toolbarViewer = true;
+    }
+  },
   components: {
     AddItem,
     List,

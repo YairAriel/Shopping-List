@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-show="isVisible">
         <v-layout row>
             <v-flex xs1 offset-xs4>
                 <v-btn fab fixed bottom dark color="indigo lighten-1" @click="saveData">
@@ -40,6 +40,7 @@
 
 <script>
   export default {
+    props: ['isVisible'],
     data () {
       return {
         snackbar: false,
