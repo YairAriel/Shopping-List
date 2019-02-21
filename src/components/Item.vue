@@ -2,15 +2,15 @@
     <div>
         <v-list-tile>
             <v-list-tile-content>
-                <v-chip v-if="!clicked" :color="item.color" text-color="white" class="body-2" 
-                    @click="getChecked">
+                <v-chip v-if="!item.clicked" :color="item.color" text-color="white" class="body-2" 
+                    @click="item.clicked = true">
                     <v-avatar :class="item.color" class="darken-3 body-2">
                         {{ item.qty }}
                     </v-avatar>
                     {{ item.name }}
                 </v-chip>
                 <v-chip v-else color="grey" text-color="white" class="body-2"
-                    @click="getUnchecked">
+                    @click="item.clicked = false">
                     <v-avatar class="grey darken-3 body-2">
                         <v-icon>done</v-icon>
                     </v-avatar>
@@ -68,7 +68,7 @@
         data () {
             return {
                 dialog: false,
-                clicked: false,
+                // clicked: false,
                 colors: [
                    'lime',
                     'amber',
@@ -82,14 +82,6 @@
             }
         },
         methods: {
-            getChecked () {
-                this.clicked = true;
-                this.$emit('checked');
-            },
-            getUnchecked () {
-                this.clicked = false;
-                this.$emit('unchecked');
-            },
             deleteItem () {
                 this.$store.commit('removeFromList', this.itemIndex);
             },

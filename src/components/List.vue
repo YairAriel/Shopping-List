@@ -5,8 +5,7 @@
         <div v-if="listOfItems.length > 0">
             <v-progress-linear :color="barColor" height="10" :value="percentage" class="mb-3"></v-progress-linear>
             <v-list :class="mobile">
-                <Item :item.sync="data" v-for="(data, index) in listOfItems" :key="index" :itemIndex="index"
-                    @checked="doneCounter++" @unchecked="doneCounter--"/>
+                <Item :item.sync="data" v-for="(data, index) in listOfItems" :key="index" :itemIndex="index"/>
             </v-list>
         </div>
     </div>
@@ -20,8 +19,7 @@
     export default {
         data() {
             return {
-                loading: true,
-                doneCounter: 0
+                loading: true
             };
         },
         computed: {
@@ -34,8 +32,12 @@
                 }
                 return { "mx-5": true };
             },
+            clickedCounter () {
+                var templist = this.listOfItems.filter(item => item.clicked == true);
+                return templist.length;
+            },
             percentage () {
-                return Math.floor((this.doneCounter / this.listOfItems.length) * 100);
+                return Math.floor((this.clickedCounter / this.listOfItems.length) * 100);
             },
             barColor () {
                 if (this.percentage == 0) {
@@ -47,9 +49,9 @@
                 } else if (this.percentage < 60) {
                     return '#FF9800';
                 } else if (this.percentage < 80) {
-                    return '#FFEB3B';
+                    return '#FFC107';
                 } else {
-                    return '#00E676';
+                    return '#00C853';
                 }
             }
         },

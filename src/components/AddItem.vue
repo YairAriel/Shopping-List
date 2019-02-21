@@ -34,9 +34,18 @@
         },
         methods: {
             addToList () {
-                this.$store.commit('itemAdded', { name: this.item, qty: this.amount, color: this.defaultColor });   
+                this.$store.commit('itemAdded', { 
+                    name: this.item, 
+                    qty: this.amount, 
+                    color: this.defaultColor, 
+                    clicked: false 
+                });   
                 this.item = "";
                 this.amount = "";
+                const data = {
+                    items: this.$store.getters.items
+                }
+                this.$http.patch('data.json', data);
             },
             inputClicked () {
                 this.$emit('hide');
