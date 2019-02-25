@@ -33,7 +33,7 @@
                 return { "mx-5": true };
             },
             clickedCounter () {
-                var templist = this.listOfItems.filter(item => item.clicked == true);
+                let templist = this.listOfItems.filter(item => item.clicked == true);
                 return templist.length;
             },
             percentage () {

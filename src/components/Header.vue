@@ -1,32 +1,26 @@
 <template>
     <div>
-        <v-card color="blue-grey darken-2" class="white--text">
-            <v-card-title primary-title class="py-3 pl-3 pr-0">
-                <div>
-                    <div class="headline">
-                        {{ headerText | toUpper }}
-                        <v-badge right overlap color="red">
-                            <span slot="badge" class="header-badge">{{ itemAmount }}</span>
-                            <v-icon large dark class="ml-3">shopping_cart</v-icon>
-                        </v-badge>
-                    </div>
-                </div>
-
-                <v-spacer></v-spacer>
-
-                <v-menu bottom left>
-                    <v-btn slot="activator" dark icon>
+        <v-toolbar color="blue-grey darken-2" class="white--text pt-3" fixed app>
+            <div class="headline pb-3">
+                {{ headerText | toUpper }}
+                <v-badge right overlap color="red">
+                    <span slot="badge" class="header-badge">{{ itemAmount }}</span>
+                    <v-icon large dark class="ml-3">shopping_cart</v-icon>
+                </v-badge>
+            </div>
+            <v-spacer></v-spacer>
+            <v-menu bottom left>
+                <v-btn slot="activator" dark icon class="pb-3">
                     <v-icon>more_vert</v-icon>
-                    </v-btn>
+                </v-btn>
 
-                    <v-list>
-                    <v-list-tile v-for="(item, i) in menuItems" :key="i">
-                        <v-list-tile-title @click="item.method" class="menu-item">{{ item.title }}</v-list-tile-title>
-                    </v-list-tile>
-                    </v-list>
-                </v-menu>
-            </v-card-title>
-        </v-card>
+                <v-list>
+                <v-list-tile v-for="(item, i) in menuItems" :key="i">
+                    <v-list-tile-title @click="item.method" class="menu-item">{{ item.title }}</v-list-tile-title>
+                </v-list-tile>
+                </v-list>
+            </v-menu>
+        </v-toolbar>
 
         <v-snackbar
             v-model="snackbar"

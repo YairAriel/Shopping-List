@@ -1,7 +1,6 @@
 <template>
-<div id="app1">
     <v-container>
-        <v-layout v-bind="binding">
+        <v-layout v-bind="binding" class="mt-2">
             <v-flex xs12 md4>
                 <v-text-field label="Enter a New Item" placeholder="Item Name" v-model="item"
                     @click="inputClicked" @blur="inputBlured"></v-text-field>
@@ -20,7 +19,6 @@
             </v-flex>
         </v-layout>
      </v-container>
-</div>
 </template>
 
 <script>
