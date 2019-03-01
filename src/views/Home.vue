@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <Header />
-    <AddItem @hide="hideToolbar" @show="showToolbar"/>
+    <Header @plusClicked="showForm" :plusShown="plusToggle" />
+    <AddItem @hide="hideToolbar" @show="showToolbar" v-show="addForm"/>
     <List />
     <Toolbar :isVisible="toolbarViewer"/>
   </div>
@@ -17,7 +17,9 @@ import Toolbar from "@/components/Toolbar.vue";
 export default {
   data () {
     return {
-      toolbarViewer: true
+      toolbarViewer: true,
+      plusToggle: true,
+      addForm: false
     }
   },
   methods: {
@@ -26,6 +28,17 @@ export default {
     },
     showToolbar () {
       this.toolbarViewer = true;
+    },
+    showForm () {
+      window.scrollTo(top);
+      setTimeout(()=> {
+        this.plusToggle = false;
+        this.addForm = true;
+      }, 50)
+    },
+    hideForm () {
+      this.plusToggle = true;
+      this.addForm = false;
     }
   },
   components: {
@@ -33,6 +46,12 @@ export default {
     List,
     Header,
     Toolbar
+  },
+  created () {
+    window.addEventListener('scroll', this.hideForm);
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.hideForm);
   }
 }
 </script>

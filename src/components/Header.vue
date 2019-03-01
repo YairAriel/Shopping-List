@@ -1,14 +1,6 @@
 <template>
     <div>
         <v-toolbar color="blue-grey darken-2" class="white--text pt-3" fixed app>
-            <div class="headline pb-3">
-                {{ headerText | toUpper }}
-                <v-badge right overlap color="red">
-                    <span slot="badge" class="header-badge">{{ itemAmount }}</span>
-                    <v-icon large dark class="ml-3">shopping_cart</v-icon>
-                </v-badge>
-            </div>
-            <v-spacer></v-spacer>
             <v-menu bottom left>
                 <v-btn slot="activator" dark icon class="pb-3">
                     <v-icon>more_vert</v-icon>
@@ -20,6 +12,20 @@
                 </v-list-tile>
                 </v-list>
             </v-menu>
+            <div class="headline pb-3">
+                {{ headerText | toUpper }}
+                <v-badge right overlap color="red">
+                    <span slot="badge" class="header-badge">{{ itemAmount }}</span>
+                    <v-icon large dark class="ml-2">shopping_cart</v-icon>
+                </v-badge>
+            </div>
+            <v-spacer></v-spacer>
+
+            <v-fab-transition>
+              <v-btn color="success" fab dark small absolute bottom right @click="hideButton" v-show="plusShown">
+                <v-icon>add</v-icon>
+              </v-btn>
+            </v-fab-transition>
         </v-toolbar>
 
         <v-snackbar
@@ -66,6 +72,7 @@
 
 <script>
     export default {
+        props: ['plusShown'],
         data () {
             return {
                 headerText: 'shopping list',
@@ -121,6 +128,9 @@
             },
             deleteList () {
 
+            },
+            hideButton () {
+                this.$emit('plusClicked');
             }
         }
     }
