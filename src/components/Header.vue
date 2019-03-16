@@ -51,7 +51,7 @@
                     <v-btn dark flat @click="saveSettings">Save</v-btn>
                 </v-toolbar-items>
                 </v-toolbar>
-                <v-card avatar>
+                <v-card>
                     <v-card-title class="pb-0">Default Color</v-card-title>
                     <v-subheader>Set the default color for the items in your list</v-subheader>
                         <v-layout row wrap class="pb-3">
@@ -64,6 +64,15 @@
                                     </v-icon>
                             </v-flex>
                         </v-layout>
+                </v-card>
+                <v-card>
+                    <v-card-title class="pb-0">Sort By Color</v-card-title>
+                    <v-subheader>
+                        Sort the shopping list by item color
+                    </v-subheader>
+                    <v-subheader class="mt-0">
+                        <v-switch v-model="sortByColor" color="primary" class="mt-0"></v-switch>
+                    </v-subheader>
                 </v-card>
             </v-card>
         </v-dialog>
@@ -103,6 +112,14 @@
             },
             defaultColor () {
                 return this.$store.getters.defaultColor;
+            },
+            sortByColor: {
+                get() {
+                    return this.$store.getters.sortByColor;
+                },
+                set(value) {
+                    this.$store.commit('setSortByColor', value);
+                }
             }
         },
         methods: {
@@ -116,7 +133,11 @@
                 const defaultColor = {
                     color: this.$store.getters.defaultColor
                 };
+                const sortByColor = {
+                    sort: this.$store.getters.sortByColor
+                };
                 this.$http.patch('defaultColor.json', defaultColor);
+                this.$http.patch('sortByColor.json', sortByColor);
                 this.settingsDialog = false;
             },
             saveList () {
@@ -132,6 +153,22 @@
             hideButton () {
                 this.$emit('plusClicked');
             }
+        },
+        created () {
+            this.$http.get('sortByColor.json')
+            .then(response => response.json())
+            .then(data => {
+                if(data) {
+                    this.$store.commit('setSortByColor', data.sort);
+                }
+            });
+            this.$http.get('defaultColor.json')
+            .then(response => response.json())
+            .then(data => {
+                if(data) {
+                    this.$store.commit('setDefaultColor', data.color);
+                }
+            });
         }
     }
 </script>

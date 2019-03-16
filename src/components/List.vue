@@ -1,11 +1,12 @@
 <template>
     <div>
         <Spinner size="60" :line-size="8" line-fg-color="#455A64" v-show="loading" 
-        class="spinner" message="Loading..."></Spinner>
+        class="spinner pt-3 mt-5" message="Loading..."></Spinner>
         <div v-if="listOfItems.length > 0">
             <v-progress-linear :color="barColor" height="10" :value="percentage" class="mb-3"></v-progress-linear>
             <v-list :class="mobile">
-                <Item :item.sync="data" v-for="(data, index) in listOfItems" :key="index" :itemIndex="index"/>
+                <Item :item.sync="data" v-for="(data, index) in listOfItems" :key="index" :itemIndex="index"
+                @edited="editClosed = false" @finishEditing="editClosed = true"/>
             </v-list>
         </div>
     </div>
@@ -19,12 +20,20 @@
     export default {
         data() {
             return {
-                loading: true
+                loading: true,
+                editClosed: true
             };
         },
         computed: {
             listOfItems() {
-                return this.$store.getters.items;
+                let list = this.$store.getters.items;
+                if (this.$store.getters.sortByColor && this.editClosed) {
+                    this.sortList(list)
+                    .then((listSorted) => {
+                        list = listSorted;
+                    });
+                }
+                return list;
             },
             mobile() {
                 if (this.$vuetify.breakpoint.smAndDown) {
@@ -53,6 +62,25 @@
                 } else {
                     return '#00C853';
                 }
+            }
+        },
+        methods: {
+            sortList(listToSort) {
+                return new Promise((resolve) => {
+                    listToSort.sort((a, b) => {
+                        var nameA = a.color.toUpperCase(); 
+                        var nameB = b.color.toUpperCase(); 
+                        if (nameA < nameB) {
+                            return -1;
+                        }
+                        if (nameA > nameB) {
+                            return 1;
+                        }
+
+                        return 0;
+                    });
+                    resolve(listToSort);
+                })
             }
         },
         created() {

@@ -89,13 +89,18 @@
                 this.tempItem.name = this.item.name;
                 this.tempItem.qty = this.item.qty;
                 this.tempItem.color = this.item.color;
+                this.$emit('edited');
                 this.dialog = true;
             },
             closeEditDialog () {
                 this.item.name = this.tempItem.name;
                 this.item.qty = this.tempItem.qty;
                 this.item.color = this.tempItem.color;
+                this.$emit('finishEditing');
                 this.dialog = false;
+            },
+            changeColor () {
+                
             },
             saveChanges () {
                 this.$store.commit('editItem', { index: this.itemIndex, item: this.item });
@@ -103,6 +108,7 @@
                     items: this.$store.getters.items
                 }
                 this.$http.patch('data.json', data);
+                this.$emit('finishEditing');
                 this.dialog = false;
             }
         }

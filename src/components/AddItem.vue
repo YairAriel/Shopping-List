@@ -63,15 +63,6 @@
             defaultColor () {
                 return this.$store.getters.defaultColor;
             }
-        },
-        created () {
-            this.$http.get('defaultColor.json')
-            .then(response => response.json())
-            .then(data => {
-                if(data) {
-                    this.$store.commit('setDefaultColor', data.color);
-                }
-            });
-        },
+        }
     }
 </script>
