@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <Header @plusClicked="showForm" :plusShown="plusToggle" />
-    <AddItem @hide="hideToolbar" @show="showToolbar" v-show="addForm"/>
-    <List />
+    <Header @plusClicked="showForm" :plusShown="plusToggle" class="header"/>
+    <AddItem @hide="hideToolbar" @show="showToolbar" v-show="addForm" />
+    <List class="list" :showBar="plusToggle"/>
     <Toolbar :isVisible="toolbarViewer"/>
   </div>
 </template>
@@ -55,3 +55,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .header {
+    z-index: 9 !important;
+  }
+  .list {
+    z-index: -1;
+  }
+</style>

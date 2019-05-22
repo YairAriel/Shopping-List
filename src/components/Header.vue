@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="header">
         <v-toolbar color="blue-grey darken-2" class="white--text pt-3" fixed app>
             <v-menu bottom left>
                 <v-btn slot="activator" dark icon class="pb-3">
@@ -7,9 +7,12 @@
                 </v-btn>
 
                 <v-list>
-                <v-list-tile v-for="(item, i) in menuItems" :key="i">
-                    <v-list-tile-title @click="item.method" class="menu-item">{{ item.title }}</v-list-tile-title>
-                </v-list-tile>
+                    <v-list-tile v-for="(item, i) in menuItems" :key="i"  @click="item.method">
+                        <v-list-tile-action>
+                            <v-icon>{{ item.action }}</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-title class="menu-item">{{ item.title }}</v-list-tile-title>
+                    </v-list-tile>
                 </v-list>
             </v-menu>
             <div class="headline pb-3">
@@ -76,10 +79,24 @@
                 </v-card>
             </v-card>
         </v-dialog>
+
+        <v-dialog v-model="deleteDialog" max-width="290">
+            <v-card>
+                <v-card-title class="headline">Delete List</v-card-title>
+                <v-card-text>Are you sure?</v-card-text>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="green darken-1" flat="flat" @click="deleteDialog = false">Cancel</v-btn>
+                <v-btn color="green darken-1" flat="flat" @click="deleteData">Yes, Delete</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
 <script>
+    import { EventBus } from '../main';
+
     export default {
         props: ['plusShown'],
         data () {
@@ -92,8 +109,10 @@
                 timeout: 6000,
                 text: 'List was saved successfully',
                 menuItems: [
-                    { title: 'Settings', method: this.openSettings },
-                    { title: 'Save List', method: this.saveList }
+                    { title: 'Save List', method: this.saveList, action: 'save' },
+                    { title: 'Delete List', method: this.openDeleteDialog, action: 'delete' },
+                    { title: 'Uncheck All', method: this.uncheckAll, action: 'check_box_outline_blank' },
+                    { title: 'Settings', method: this.openSettings, action: 'settings' }
                 ],
                 settingsDialog: false,
                 colors: [
@@ -103,7 +122,8 @@
                     'pink',
                     'deep-purple',
                     'indigo'
-                ]
+                ],
+                deleteDialog: false
             }
         },
         computed: {
@@ -147,11 +167,18 @@
                 this.$http.patch('data.json', data);
                 this.snackbar = true;
             },
-            deleteList () {
-
+            openDeleteDialog () {
+                this.deleteDialog = true;
+            },
+            deleteData () {
+                this.deleteDialog = false;
+                this.$store.commit('deleteList');            
             },
             hideButton () {
                 this.$emit('plusClicked');
+            },
+            uncheckAll () {
+                EventBus.$emit('uncheck');
             }
         },
         created () {

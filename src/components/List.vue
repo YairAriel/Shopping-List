@@ -3,8 +3,9 @@
         <Spinner size="60" :line-size="8" line-fg-color="#455A64" v-show="loading" 
         class="spinner pt-3 mt-5" message="Loading..."></Spinner>
         <div v-if="listOfItems.length > 0">
-            <v-progress-linear :color="barColor" height="10" :value="percentage" class="mb-3"></v-progress-linear>
-            <v-list :class="mobile">
+            <v-progress-linear :color="barColor" height="10" :value="percentage" class="mb-3 sticky"
+             v-show="showBar"></v-progress-linear>
+            <v-list :class="mobile" class="mt-3">
                 <Item :item.sync="data" v-for="(data, index) in listOfItems" :key="index" :itemIndex="index"
                 @edited="editClosed = false" @finishEditing="editClosed = true"/>
             </v-list>
@@ -16,8 +17,10 @@
 <script>
     import Item from "./Item.vue";
     import Spinner from "vue-simple-spinner";
+    import { EventBus } from '../main';
 
     export default {
+        props: ['showBar'],
         data() {
             return {
                 loading: true,
@@ -83,18 +86,22 @@
                 })
             }
         },
-        created() {
+        created () {
             this.$http
             .get("data.json")
             .then(response => response.json())
             .then(data => {
                 if (data) {
-                const shoppingList = data.items;
-                this.$store.commit("setList", shoppingList);
-                this.loading = false;
+                    const shoppingList = data.items;
+                    this.$store.commit("setList", shoppingList);
+                    this.loading = false;
                 } else {
-                this.loading = false;
+                    this.loading = false;
                 }
+            });
+
+            EventBus.$on('uncheck', () => {
+                this.listOfItems.forEach(item => item.clicked = false);
             });
         },
         components: {
@@ -107,5 +114,9 @@
 <style lang="scss" scoped>
     .spinner {
         margin-bottom: 3em;
+    }
+    .sticky {
+        position: fixed;
+        margin: 0;
     }
 </style>

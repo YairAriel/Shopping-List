@@ -15,6 +15,8 @@ Vue.http.options.root = "https://shopping-list-90bf3.firebaseio.com/data";
 
 Vue.filter("toUpper", value => value.toUpperCase());
 
+export const EventBus = new Vue();
+
 new Vue({
   router,
   store,
