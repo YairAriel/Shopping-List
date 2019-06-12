@@ -104,10 +104,10 @@
             },
             saveChanges () {
                 this.$store.commit('editItem', { index: this.itemIndex, item: this.item });
-                const data = {
+                const list = {
                     items: this.$store.getters.items
                 }
-                this.$http.patch('data.json', data);
+                this.$http.put('update-items/first', list);
                 this.$emit('finishEditing');
                 this.dialog = false;
             }

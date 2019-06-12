@@ -150,21 +150,19 @@
                 this.$store.commit('setDefaultColor', newDefaultColor);
             },
             saveSettings () {
-                const defaultColor = {
-                    color: this.$store.getters.defaultColor
+                const settings = {
+                    default_color: this.$store.getters.defaultColor,
+                    sort_by_color: this.$store.getters.sortByColor
                 };
-                const sortByColor = {
-                    sort: this.$store.getters.sortByColor
-                };
-                this.$http.patch('defaultColor.json', defaultColor);
-                this.$http.patch('sortByColor.json', sortByColor);
+        
+                this.$http.put('update-settings/first', settings);
                 this.settingsDialog = false;
             },
             saveList () {
-                const data = {
+                const list = {
                     items: this.$store.getters.items
                 }
-                this.$http.patch('data.json', data);
+                this.$http.put('update-items/first', list);
                 this.snackbar = true;
             },
             openDeleteDialog () {
@@ -180,22 +178,6 @@
             uncheckAll () {
                 EventBus.$emit('uncheck');
             }
-        },
-        created () {
-            this.$http.get('sortByColor.json')
-            .then(response => response.json())
-            .then(data => {
-                if(data) {
-                    this.$store.commit('setSortByColor', data.sort);
-                }
-            });
-            this.$http.get('defaultColor.json')
-            .then(response => response.json())
-            .then(data => {
-                if(data) {
-                    this.$store.commit('setDefaultColor', data.color);
-                }
-            });
         }
     }
 </script>

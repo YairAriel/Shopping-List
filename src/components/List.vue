@@ -88,12 +88,18 @@
         },
         created () {
             this.$http
-            .get("data.json")
+            .get("list/first")
             .then(response => response.json())
             .then(data => {
                 if (data) {
                     const shoppingList = data.items;
+                    const defaultColor = data.default_color;
+                    const sortByColor = data.sort_by_color;
+
                     this.$store.commit("setList", shoppingList);
+                    this.$store.commit("setDefaultColor", defaultColor);
+                    this.$store.commit("setSortByColor", sortByColor);
+                    
                     this.loading = false;
                 } else {
                     this.loading = false;

@@ -54,10 +54,10 @@
     },
     methods: {
         saveData () {
-            const data = {
+            const list = {
                 items: this.$store.getters.items
             }
-            this.$http.patch('data.json', data);
+            this.$http.put('update-items/first', list);
             this.snackbar = true;
         },
         deleteData () {

@@ -40,10 +40,10 @@
                 });   
                 this.item = "";
                 this.amount = "";
-                const data = {
+                const list = {
                     items: this.$store.getters.items
                 }
-                this.$http.patch('data.json', data);
+                this.$http.put('update-items/first', list);
             },
             inputClicked () {
                 this.$emit('hide');
