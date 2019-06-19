@@ -43,7 +43,8 @@
                 const list = {
                     items: this.$store.getters.items
                 }
-                this.$http.put('update-items/first', list);
+                const listName = this.$store.getters.listName;
+                this.$http.put('update-items/' + listName, list);
             },
             inputClicked () {
                 this.$emit('hide');

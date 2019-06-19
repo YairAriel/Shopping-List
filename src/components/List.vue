@@ -87,8 +87,9 @@
             }
         },
         created () {
+            const listName = this.$store.getters.listName;
             this.$http
-            .get("list/first")
+            .get("list/" + listName)
             .then(response => response.json())
             .then(data => {
                 if (data) {

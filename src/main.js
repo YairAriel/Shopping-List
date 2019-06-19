@@ -11,8 +11,7 @@ Vue.config.productionTip = false;
 Vue.use(Vuetify);
 Vue.use(VueResource);
 
-// Vue.http.options.root = "https://shopping-list-90bf3.firebaseio.com/data";
-Vue.http.options.root = "http://localhost:3000";
+Vue.http.options.root = "https://shopping-list-server.herokuapp.com";
 
 Vue.filter("toUpper", value => value.toUpperCase());
 

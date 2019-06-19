@@ -107,7 +107,8 @@
                 const list = {
                     items: this.$store.getters.items
                 }
-                this.$http.put('update-items/first', list);
+                const listName = this.$store.getters.listName;
+                this.$http.put('update-items/' + listName, list);
                 this.$emit('finishEditing');
                 this.dialog = false;
             }

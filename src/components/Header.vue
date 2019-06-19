@@ -154,15 +154,17 @@
                     default_color: this.$store.getters.defaultColor,
                     sort_by_color: this.$store.getters.sortByColor
                 };
-        
-                this.$http.put('update-settings/first', settings);
+                const listName = this.$store.getters.listName;
+
+                this.$http.put('update-settings/' + listName, settings);
                 this.settingsDialog = false;
             },
             saveList () {
                 const list = {
                     items: this.$store.getters.items
                 }
-                this.$http.put('update-items/first', list);
+                const listName = this.$store.getters.listName;
+                this.$http.put('update-items/' + listName, list);
                 this.snackbar = true;
             },
             openDeleteDialog () {

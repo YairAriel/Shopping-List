@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     list: [],
     color: "",
-    sortByColor: false
+    sortByColor: false,
+    listName: ""
   },
   getters: {
     items(state) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     sortByColor(state) {
       return state.sortByColor;
+    },
+    listName(state) {
+      return state.listName;
     }
   },
   mutations: {
@@ -41,6 +45,9 @@ export default new Vuex.Store({
     },
     setSortByColor(state, sort) {
       state.sortByColor = sort;
+    },
+    setListName(state, name) {
+      state.listName = name;
     }
   },
   actions: {}
