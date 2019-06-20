@@ -21,6 +21,7 @@
                     <span slot="badge" class="header-badge">{{ itemAmount }}</span>
                     <v-icon large dark class="ml-2">shopping_cart</v-icon>
                 </v-badge>
+                <span class="body-2 ml-3">{{ listName }}</span>
             </div>
             <v-spacer></v-spacer>
 
@@ -140,6 +141,9 @@
                 set(value) {
                     this.$store.commit('setSortByColor', value);
                 }
+            },
+            listName () {
+                return this.$store.getters.listName;
             }
         },
         methods: {
