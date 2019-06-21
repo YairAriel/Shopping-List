@@ -8,7 +8,10 @@
         <h3 class="display-1 my-5">{{ title | toUpper }}</h3>
         <v-text-field label="Your list name" v-model="listName" @input="existingName = false"></v-text-field>
         <p class="alert" v-show="existingName">{{ existingList }}</p>
-        <v-btn block class="mt-4" :disabled="listName == ''" @click="checkListName">{{ buttonCreate | toUpper}}</v-btn>
+        <v-btn block class="mt-4" :disabled="listName == ''" @click="checkListName">
+            {{ buttonCreate | toUpper}}
+            <v-progress-circular  v-show="loading" indeterminate color="blue-grey darken-3" :size="20" :width="3" class="ml-3"></v-progress-circular>
+        </v-btn>
       </v-flex>
     </v-layout>
   </div>
@@ -22,15 +25,18 @@ export default {
             listName: "",
             buttonCreate: "create",
             existingList: "List name has already exists, try another one",
-            existingName: false
+            existingName: false,
+            loading: false
         }
     },
     methods: {
         checkListName () {
+            this.loading = true;
             this.$http.get("list/" + this.listName)
             .then(response => response.json())
             .then(data => {
                 if (JSON.stringify(data) != "{}") {
+                    this.loading = false;
                     this.existingName = true;
                 } else {
                     this.createList();
@@ -38,8 +44,9 @@ export default {
             });
         },
         createList () {
-            this.$http.post("list", { "list_name": this.listName })
+            this.$http.post("list/", { "list_name": this.listName })
             .then(response => {
+                this.loading = false;
                 this.$store.commit("setListName", this.listName);
                 this.$router.push("/my-list");
             });

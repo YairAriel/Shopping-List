@@ -7,7 +7,10 @@
         </v-btn>
         <h3 class="display-1 my-5">{{ title | toUpper }}</h3>
         <v-text-field label="Your list name" v-model="listName"></v-text-field>
-        <v-btn block @click="openList" :disabled="listName == ''">{{ buttonText | toUpper}}</v-btn>
+        <v-btn block @click="openList" :disabled="listName == ''">
+            {{ buttonText | toUpper}}
+            <v-progress-circular  v-show="loading" indeterminate color="blue-grey darken-3" :size="20" :width="3" class="ml-3"></v-progress-circular>
+        </v-btn>
       </v-flex>
     </v-layout>
     <v-layout row xs-12 justify-center>
@@ -23,16 +26,19 @@ export default {
       title: "shopping list",
       buttonText: "let's get started!",
       createListText: "Have no list yet? Tap here to open one, it's easy",
-      listName: ""
+      listName: "",
+      loading: false
     };
   },
   methods: {
     openList() {
+      this.loading = true;
       this.$http
         .get("list/" + this.listName)
         .then(response => response.json())
         .then(data => {
           if (JSON.stringify(data) != "{}") {
+            this.loading = false;
             this.$store.commit("setListName", data.list_name);
             this.$router.push("/my-list");
           } else {
