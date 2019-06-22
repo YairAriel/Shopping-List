@@ -113,7 +113,8 @@
                     { title: 'Save List', method: this.saveList, action: 'save' },
                     { title: 'Delete List', method: this.openDeleteDialog, action: 'delete' },
                     { title: 'Uncheck All', method: this.uncheckAll, action: 'check_box_outline_blank' },
-                    { title: 'Settings', method: this.openSettings, action: 'settings' }
+                    { title: 'Settings', method: this.openSettings, action: 'settings' },
+                    { title: 'Exit', method: this.exitList, action: 'exit_to_app'}
                 ],
                 settingsDialog: false,
                 colors: [
@@ -183,6 +184,9 @@
             },
             uncheckAll () {
                 EventBus.$emit('uncheck');
+            },
+            exitList () {
+                this.$router.push('/');
             }
         }
     }

@@ -6,7 +6,7 @@
           <v-icon dark class="main-icon">shopping_cart</v-icon>
         </v-btn>
         <h3 class="display-1 my-5">{{ title | toUpper }}</h3>
-        <v-text-field label="Your list name" v-model="listName" @input="existingName = false"></v-text-field>
+        <v-text-field :label="labelText" v-model="listName" @input="existingName = false"></v-text-field>
         <p class="alert" v-show="existingName">{{ existingList }}</p>
         <v-btn block class="mt-4" :disabled="listName == ''" @click="checkListName">
             {{ buttonCreate | toUpper}}
@@ -22,6 +22,7 @@ export default {
     data () {
         return {
             title: "shopping list",
+            labelText: "New list name",
             listName: "",
             buttonCreate: "create",
             existingList: "List name has already exists, try another one",
