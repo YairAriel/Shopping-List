@@ -1,7 +1,7 @@
 <template>
     <div>
         <Spinner size="60" :line-size="8" line-fg-color="#455A64" v-show="loading" 
-        class="spinner pt-3 mt-5" message="Loading..."></Spinner>
+        class="spinner pt-5 mt-5" message="Loading..."></Spinner>
         <div v-if="listOfItems.length > 0">
             <v-progress-linear :color="barColor" height="10" :value="percentage" class="mb-3 sticky"
              v-show="showBar"></v-progress-linear>

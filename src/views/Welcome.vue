@@ -6,10 +6,11 @@
           <v-icon dark class="main-icon">shopping_cart</v-icon>
         </v-btn>
         <h3 class="display-1 my-5">{{ title | toUpper }}</h3>
-        <v-text-field :label="labelText" v-model="listName"></v-text-field>
+        <v-text-field :label="labelText" v-model="listName" @input="incorrectListText = false"></v-text-field>
+        <p v-show="incorrectListText" class="alert incorrect">{{ noList }}</p>
         <v-btn block @click="openList" :disabled="listName == ''">
             {{ buttonText | toUpper}}
-            <v-progress-circular  v-show="loading" indeterminate color="blue-grey darken-3" :size="20" :width="3" class="ml-3"></v-progress-circular>
+            <v-progress-circular v-show="loading" indeterminate color="blue-grey darken-3" :size="20" :width="3" class="ml-3"></v-progress-circular>
         </v-btn>
       </v-flex>
     </v-layout>
@@ -25,6 +26,8 @@ export default {
     return {
       title: "shopping list",
       labelText: "Your list name",
+      noList: "List name is incorrect, please try again",
+      incorrectListText: false,
       buttonText: "let's get started!",
       createListText: "Have no list yet? Tap here to open one, it's easy",
       listName: "",
@@ -43,7 +46,8 @@ export default {
             this.$store.commit("setListName", data.list_name);
             this.$router.push("/my-list");
           } else {
-            console.log("no list!");
+            this.loading = false;
+            this.incorrectListText = true;
           }
         });
     },
@@ -63,7 +67,14 @@ export default {
   }
 }
 .new-list-btn {
-    color: red;
     cursor: pointer;
+    line-height: 20px;
+    color: #1976D2;
+}
+.incorrect {
+  text-align: left;
+  font-size: 16px;
+  margin-top: -8px;
+  color: red;
 }
 </style>

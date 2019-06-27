@@ -14,6 +14,11 @@
         </v-btn>
       </v-flex>
     </v-layout>
+    <v-layout row xs12 justify-start class="px-4">
+      <v-btn flat color="blue darken-2" class="body-2 mt-4" @click="$router.push('/')">
+        <v-icon class="mr-1">arrow_back</v-icon> {{ back }}
+      </v-btn>
+    </v-layout>
   </div>
 </template>
 
@@ -26,6 +31,7 @@ export default {
             listName: "",
             buttonCreate: "create",
             existingList: "List name has already exists, try another one",
+            back: "Back",
             existingName: false,
             loading: false
         }
@@ -50,8 +56,7 @@ export default {
                 this.loading = false;
                 this.$store.commit("setListName", this.listName);
                 this.$router.push("/my-list");
-            });
-                
+            });   
         }
     }
 }

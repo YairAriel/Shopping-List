@@ -13,6 +13,7 @@ import AddItem from "@/components/AddItem.vue";
 import List from "@/components/List.vue";
 import Header from "@/components/Header.vue";
 import Toolbar from "@/components/Toolbar.vue";
+import { EventBus } from '../main';
 
 export default {
   data () {
@@ -49,6 +50,9 @@ export default {
   },
   created () {
     window.addEventListener('scroll', this.hideForm);
+    EventBus.$on('itemClicked', () => {
+      this.hideForm();
+    })
   },
   destroyed () {
     window.removeEventListener('scroll', this.hideForm);

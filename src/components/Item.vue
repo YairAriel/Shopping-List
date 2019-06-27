@@ -3,14 +3,14 @@
         <v-list-tile>
             <v-list-tile-content>
                 <v-chip v-if="!item.clicked" :color="item.color" text-color="white" class="body-2" 
-                    @click="item.clicked = true">
+                    @click="checkItem">
                     <v-avatar :class="item.color" class="darken-3 body-2">
                         {{ item.qty }}
                     </v-avatar>
                     {{ item.name }}
                 </v-chip>
                 <v-chip v-else color="grey" text-color="white" class="body-2"
-                    @click="item.clicked = false">
+                    @click="uncheckItem">
                     <v-avatar class="grey darken-3 body-2">
                         <v-icon>done</v-icon>
                     </v-avatar>
@@ -63,12 +63,13 @@
 </template>
 
 <script>
+    import { EventBus } from '../main';
+
     export default {
         props: ['item', 'itemIndex'],
         data () {
             return {
                 dialog: false,
-                // clicked: false,
                 colors: [
                    'lime',
                     'amber',
@@ -111,6 +112,14 @@
                 this.$http.put('update-items/' + listName, list);
                 this.$emit('finishEditing');
                 this.dialog = false;
+            },
+            checkItem () {
+                this.item.clicked = true;
+                EventBus.$emit('itemClicked');
+            },
+            uncheckItem () {
+                this.item.clicked = false;
+                EventBus.$emit('itemClicked');
             }
         }
     }
