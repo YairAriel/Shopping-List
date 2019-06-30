@@ -1,0 +1,1 @@
+export const colors = ['amber', 'deep-orange', 'deep-purple', 'indigo', 'lime', 'pink'];

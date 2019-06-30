@@ -97,6 +97,7 @@
 
 <script>
     import { EventBus } from '../main';
+    import { colors } from '../data/colors';
 
     export default {
         props: ['plusShown'],
@@ -117,15 +118,8 @@
                     { title: 'Exit', method: this.exitList, action: 'exit_to_app'}
                 ],
                 settingsDialog: false,
-                colors: [
-                    'lime',
-                    'amber',
-                    'deep-orange',
-                    'pink',
-                    'deep-purple',
-                    'indigo'
-                ],
-                deleteDialog: false
+                deleteDialog: false,
+                colors: colors
             }
         },
         computed: {

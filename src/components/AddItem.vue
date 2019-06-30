@@ -15,7 +15,7 @@
                     color="success"
                     class="subheading"
                     @click="addToList"
-                    :disabled="item == '' || amount == ''">{{ addText | toUpper }}</v-btn>
+                    :disabled="item == ''">{{ addText | toUpper }}</v-btn>
             </v-flex>
         </v-layout>
      </v-container>
@@ -26,7 +26,7 @@
         data () {
             return {
                 item: '',
-                amount: '',
+                amount: 1,
                 addText: 'add item'
             }
         },
@@ -39,7 +39,7 @@
                     clicked: false 
                 });   
                 this.item = "";
-                this.amount = "";
+                this.amount = 1;
                 const list = {
                     items: this.$store.getters.items
                 }

@@ -64,22 +64,16 @@
 
 <script>
     import { EventBus } from '../main';
+    import { colors } from '../data/colors';
 
     export default {
         props: ['item', 'itemIndex'],
         data () {
             return {
                 dialog: false,
-                colors: [
-                   'lime',
-                    'amber',
-                    'deep-orange',
-                    'pink',
-                    'deep-purple',
-                    'indigo'
-                ],
                 pickedColor: '',
-                tempItem: {}
+                tempItem: {},
+                colors: colors
             }
         },
         methods: {
